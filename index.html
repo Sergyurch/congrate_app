@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<title>Поздравлялка</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- <link href="style.css" rel="stylesheet"> -->
+	</head>
+	<body>
+		<script src="https://vk.com/js/api/xd_connection.js?2"  type="text/javascript"></script>
+		<script>
+			VK.init(function() {
+			    VK.api("groups.get", {"extended": "1", 'count':300}, function (data) {
+
+					    //console.log(data.response); 
+					    // по умолчанию на завтра
+					   //  var now = new Date();
+					  	// var d = now.getDate() +1; //alert(d);
+					  	// var m = now.getMonth()+1; //alert(m);
+					  	
+					  
+					   //  document.getElementById('result1').innerHTML =
+					   //  'Введите id сообщества в котором хотите поздравить именнинников:' + '<br><br><input id="gr_id" value="128570542">' 
+					   //  +
+					   //  'и дату: <input id="day3" value="'+d+'" style="width:15px;">.<input id="month3" value="'+m+'" style="width:15px;"> '
+					   //  +
+					   //  '<input type="button" value="Поехали" onclick="get_users(document.getElementById(\'gr_id\').value)"><br><br><br>' +
+					   //   'Или выберите сообщество (доступны только те сообщества, которые видны у вас всем):<br>';
+
+					   //  var out = '';
+					   //  for (var i in data.response.items) {
+					   //      out += i + ": " + data.response.items[i].name + '<a href="#" onclick="get_users(' + data.response.items[i].id + ')">Выбрать</a><br>';
+
+					   //  }
+					   //  out_end = '<br><br>';
+
+					   //  document.getElementById('result1').innerHTML += out + out_end;
+					   document.write(data);
+
+				});
+		    }, function() {
+			    document.write('Ошибка инициализации приложения!! Обратитесь к разработчику приложения или обновите страницу.');
+			}, '5.131'); 
+		</script>
+	</body>
+</html>
