@@ -4,7 +4,6 @@
 		<title>Поздравлялка</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<!-- <link href="style.css" rel="stylesheet"> -->
 		<script src="https://vk.com/js/api/xd_connection.js?2"  type="text/javascript"></script>
 		<style>
 			* {
@@ -50,7 +49,6 @@
 	</head>
 	<body>
 		<div class="container">
-			<!-- <button id="make-post-btn" style="display: none;" onclick="makePost()">Разместить пост</button> -->
 			<p>Выберите группу, в которой будет размещено поздравление.</p>
 			<select id="groups">
 			</select>
@@ -67,6 +65,19 @@
 	</body>
 	<script>
 		'use strict';
+		
+		// let url = 'https://t-loves.narod.ru/pozdravlenie-den-rojdeniya-luchiye.htm';
+		
+		// fetch(url, {mode: 'no-cors'}).then(function (response) {
+		// 		return response.text();
+		// 	}).then(function (html) {
+		// 		console.log(html.length);
+		// 	}).catch(function (err) {
+		// 		console.warn('Something went wrong.', err);
+		// });
+		
+			
+		
 		const groups = document.getElementById('groups');
 		const text = document.getElementById('text');
 		const usersPhotos = document.getElementById('users-photos');
@@ -86,42 +97,12 @@
 
 		VK.init(function() {
 			VK.api("groups.get", {"extended": "1", 'count':300, 'filter': 'moder'}, function (data) {
-
-					//console.log(data.response); 
-					// по умолчанию на завтра
-				   //  var now = new Date();
-					// var d = now.getDate() +1; //alert(d);
-					// var m = now.getMonth()+1; //alert(m);
-
-
-				   //  document.getElementById('result1').innerHTML =
-				   //  'Введите id сообщества в котором хотите поздравить именнинников:' + '<br><br><input id="gr_id" value="128570542">' 
-				   //  +
-				   //  'и дату: <input id="day3" value="'+d+'" style="width:15px;">.<input id="month3" value="'+m+'" style="width:15px;"> '
-				   //  +
-				   //  '<input type="button" value="Поехали" onclick="get_users(document.getElementById(\'gr_id\').value)"><br><br><br>' +
-				   //   'Или выберите сообщество (доступны только те сообщества, которые видны у вас всем):<br>';
-
-				   //  var out = '';
-				   //  for (var i in data.response.items) {
-				   //      out += i + ": " + data.response.items[i].name + '<a href="#" onclick="get_users(' + data.response.items[i].id + ')">Выбрать</a><br>';
-
-				   //  }
-				   //  out_end = '<br><br>';
-
-				   //  document.getElementById('result1').innerHTML += out + out_end;
-				  // document.write(JSON.stringify(data));
-
 				data.response.items.forEach( (item) => {
 					let elem = document.createElement('option');
 					elem.innerHTML = item.name;
 					elem.setAttribute('value', item.id);
 					groups.appendChild(elem);
-
 				});	
-
-				// getUsers(groups.value, defaultPostMonth, defaultPostDate)
-
 			});
 		}, function() {
 			document.write('Ошибка инициализации приложения!! Обратитесь к разработчику приложения или обновите страницу.');
@@ -135,54 +116,19 @@
 			postYear = +dateTime.slice(0, 4);
 			postMonth = +dateTime.slice(5, 7);
 			postDate = +dateTime.slice(8, 10);
-			console.log(postMonth);
 		}
 
 		function showUsers(groupId, month, date) {
-
 			VK.init(function() {
-				VK.api("users.search", {group_id: groupId, /*birth_day: date,*/ birth_month: month, count:1000, fields: 'photo_id,photo_100'}, function (data) {
-
-
-						// document.getElementById('result2').innerHTML = 
-						// 'Сегодня мы спешим поздравить наших сообщников с ДНЕМ РОЖДЕНИЯ!!! ' + "\r\n" + '';
-
-
-						// var out = '';
-						// var attachments = '';
-						// var photos = '';
-						// for (var i in data2.response.items) {
-						// 	//y=i+1;
-						//     out += ' [id'+data2.response.items[i].id+'|' + data2.response.items[i].first_name + ' '+data2.response.items[i].last_name+ 
-						//     '] '+
-
-						//     '';
-						//     if(data2.response.items[i].photo_id != "undefined") {
-						//     	attachments += 'photo'+data2.response.items[i].photo_id +',';
-						//     	photos += '<a target="_blank" href="'+data2.response.items[i].photo_200+'"><img src="'+data2.response.items[i].photo_200 +'" alt="" width="75"></a>';
-						//     }
-
-						// }
-						// document.getElementById('result2').innerHTML += out;
-						// document.getElementById('photos').innerHTML += photos;
-						// document.getElementById('attachments').innerHTML += attachments;
-
-					// let usersList = '';
+				VK.api("users.search", {group_id: groupId, birth_day: date, birth_month: month, count:1000, fields: 'photo_id,photo_100'}, function (data) {
 					let usersList = [];
 					let usersPhotosList = [];
-					// attachments = [];
-
+					
 					data.response.items.forEach(function (user) {
-						console.log(JSON.stringify(user));
-						// console.log(user.bdate);
 						let userInfo = '[id' + user.id + '|' + user.first_name + ' ' + user.last_name + ']';
-						// console.log(userInfo);
-						// text.innerHTML += userInfo + ' ';
-						// usersList += userInfo + ' ';
 						usersList.push(userInfo);
 						let userPhoto = '<label><img src="' + user.photo_100 + '"><input type="checkbox" data-photo-id="photo' + 
 							user.photo_id + '" checked></label>';
-						// usersPhotos.innerHTML += userPhoto;
 						usersPhotosList.push(userPhoto);
 						let attachment = 'photo' + user.photo_id;
 						attachments.push(attachment);
@@ -201,7 +147,6 @@
 			}, function() {
 				document.write('Ошибка инициализации приложения!! Обратитесь к разработчику приложения или обновите страницу.');
 			}, '5.131');
-
 		}
 
 		function makePost() {
