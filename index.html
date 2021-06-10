@@ -96,7 +96,7 @@
 		text.innerHTML = staticText;
 
 		VK.init(function() {
-			VK.api("groups.get", {"extended": "1", 'count':300, 'filter': 'moder'}, function (data) {
+			VK.api("groups.get", {"extended": "1", 'count':300, 'filter': 'admin'}, function (data) {
 				data.response.items.forEach( (item) => {
 					let elem = document.createElement('option');
 					elem.innerHTML = item.name;
@@ -120,12 +120,12 @@
 
 		function showUsers(groupId, month, date) {
 			VK.init(function() {
-				VK.api("users.search", {group_id: groupId, birth_day: date, birth_month: month, count:1000, fields: 'photo_id,photo_100'}, function (data) {
+				VK.api("users.search", {group_id: groupId, /*birth_day: date,*/ birth_month: month, count:1000, fields: 'photo_id,photo_100'}, function (data) {
 					let usersList = [];
 					let usersPhotosList = [];
 					
 					data.response.items.forEach(function (user) {
-						let userInfo = '[id' + user.id + '|' + user.first_name + ' ' + user.last_name + ']';
+						let userInfo = '@id' + user.id + ' (' + user.first_name + ' ' + user.last_name + ') ';
 						usersList.push(userInfo);
 						let userPhoto = '<label><img src="' + user.photo_100 + '"><input type="checkbox" data-photo-id="photo' + 
 							user.photo_id + '" checked></label>';
@@ -151,7 +151,6 @@
 
 		function makePost() {
 			let publish_date = Date.parse( document.getElementById('post-date').value ) / 1000;
-			console.log('Data publicacii' + publish_date );
 			attachments = [];
 
 			document.querySelectorAll('input[data-photo-id]').forEach((elem) => {
@@ -162,7 +161,7 @@
 
 			VK.init(function() {
 				VK.api("wall.post", {owner_id: '-' + groups.value, from_group: 1, publish_date: publish_date,
-					message: text.innerHTML, attachments: attachments.join(',')});
+					message: text.value, attachments: attachments.join(',')});
 			}, function() {
 				document.write('Ошибка инициализации приложения!! Обратитесь к разработчику приложения или обновите страницу.');
 			}, '5.131');
