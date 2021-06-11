@@ -120,7 +120,7 @@
 
 		function showUsers(groupId, month, date) {
 			VK.init(function() {
-				VK.api("users.search", {group_id: groupId, /*birth_day: date,*/ birth_month: month, count:1000, fields: 'photo_id,photo_100'}, function (data) {
+				VK.api("users.search", {group_id: groupId, birth_day: date, birth_month: month, count:1000, fields: 'photo_id,photo_100'}, function (data) {
 					let usersList = [];
 					let usersPhotosList = [];
 					
